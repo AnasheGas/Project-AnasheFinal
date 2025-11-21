@@ -15,17 +15,23 @@ def play(vs_ai: bool = False, optimal: bool = True) -> None:
             move = best_move(game, ai_player) if optimal else random_move(game)
             print(f"AI ({ai_player}) chooses {move}")
             game.make_move(move)
-            continue
-        try:
-            raw = input(f"Player {game.current_player} enter move (0-8): ").strip()
-            move = int(raw)
-        except ValueError:
-            print("Invalid input. Enter a digit 0-8.")
-            continue
-        if not game.make_move(move):
-            print("Invalid move. Try again.")
+        else:
+
+            try:
+                raw = input(f"Player {game.current_player} enter move (0-8): ").strip()
+                move = int(raw)
+            except ValueError:
+                print("Invalid input. Enter a digit 0-8.")
+                continue
+            else:
+                if not game.make_move(move):
+                    print("Invalid move. Try again.")
+            
     print("\nFinal board:")
     print(game.pretty_board())
+    __who_won(game)
+
+def __who_won(game):
     if game.winner:
         print(f"Winner: {game.winner}")
     else:
